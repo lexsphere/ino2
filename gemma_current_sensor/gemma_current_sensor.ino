@@ -23,9 +23,9 @@ int reset_interval = 1;	//360*24 /* if we take samples at every 10 seconds */
 
 int reset_counter = 0;
 #define SAR_LEN 3600 /* number of samples */
-#define S_PROCENTAGE 90	/* samples_on procentage */
+#define S_PROCENTAGE 90	/* samples_on percentage */
 int sarr[SAR_LEN] = {0}; /* samples array */
-int sproc = SAR_LEN * S_PROCENTAGE/100; /* calculate samples procentage */ 
+int sproc = SAR_LEN * S_PROCENTAGE/100; /* calculate samples percentage */ 
 
 
 void setup() {
