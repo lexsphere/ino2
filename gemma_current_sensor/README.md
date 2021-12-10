@@ -1,3 +1,4 @@
+For this project a adafruit gemma was used with teeny-tiny modifications.
 This circuit will listen on the analogic current sensor port and it will count for how long the AC consumer is on.
 After a while will cut off the AC consumer power since it reached the maxim treshold time for which is allowed to be on. Eventually pressing the pushbak button ("btn") will reset the timer.
 
