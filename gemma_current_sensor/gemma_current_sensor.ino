@@ -63,28 +63,28 @@ void check_consecutive_current_withdraw(int sensor_val) {
 
 }
 void check_load_on_during_and_interval() {
-	//// check load_on during and interval
-	//if  ( i%sample_interval == 0 ) {
-	//	if (load_on) {
-	//		sarr[j] = 1;	
-	//	} else {
-	//		sarr[j] = 0;	
-	//	}
-	//	j++;
-	//	if (j > SAR_LEN){
-	//		j = 0;
-	//	}
-	//}
+	// check load_on during and interval
+	if  ( i%sample_interval == 0 ) {
+		if (load_on) {
+			sarr[j] = 1;	
+		} else {
+			sarr[j] = 0;	
+		}
+		j++;
+		if (j > SAR_LEN){
+			j = 0;
+		}
+	}
 
-	//ssum = 0;
-	//for (int m = 0; m < SAR_LEN; m++) {
-	//	ssum = ssum + sarr[m]; 
-	//}
+	ssum = 0;
+	for (int m = 0; m < SAR_LEN; m++) {
+		ssum = ssum + sarr[m]; 
+	}
 
-	//if (ssum > sproc) {
-	//	alarm = true;
-	//	memset(sarr, 0, sizeof(sarr));
-	//}
+	if (ssum > sproc) {
+		alarm = true;
+		memset(sarr, 0, sizeof(sarr));
+	}
 
 }
 void reset_via_watchdog_timer() {
