@@ -16,16 +16,15 @@ int j = 0;			/* main loop counter */
 int ssum = 0;		/* samples sum */
 #include <avr/wdt.h>
 
-#define TRESHOLD 10 /* ~mV */
-int max_onc = 1800; //1800 /* consecutive cycles; max on counter */ 
-int sample_interval = 10; //10 /* sample interval - sample at every x cycles */
-int reset_interval = 1;	//360*24 /* if we take samples at every 10 seconds */
+#define TRESHOLD 10 /* mV */
 
-int reset_counter = 0;
-#define SAR_LEN 3600 /* number of samples */
-#define S_PROCENTAGE 90	/* samples_on percentage */
+int max_onc = 1800;			/* consecutive cycles; max on counter */ 
+#define SAR_LEN 3600			/* number of samples */
+#define S_PROCENTAGE 90		/* samples_on procentage */
+int sample_interval = 10;	/* sample interval - sample at every x cycles */
+
 int sarr[SAR_LEN] = {0}; /* samples array */
-int sproc = SAR_LEN * S_PROCENTAGE/100; /* calculate samples percentage */ 
+int sproc = SAR_LEN * S_PROCENTAGE/100; /* calculate samples procentage */ 
 
 
 void setup() {
@@ -61,34 +60,6 @@ void check_consecutive_current_withdraw(int sensor_val) {
 		on_counter = 0;
 	}
 
-}
-void check_load_on_during_and_interval() {
-	// check load_on during and interval
-	if  ( i%sample_interval == 0 ) {
-		if (load_on) {
-			sarr[j] = 1;	
-		} else {
-			sarr[j] = 0;	
-		}
-		j++;
-		if (j > SAR_LEN){
-			j = 0;
-		}
-	}
-
-	ssum = 0;
-	for (int m = 0; m < SAR_LEN; m++) {
-		ssum = ssum + sarr[m]; 
-	}
-
-	if (ssum > sproc) {
-		alarm = true;
-		memset(sarr, 0, sizeof(sarr));
-	}
-
-}
-void reset_via_watchdog_timer() {
-	while(true) {}
 }
 void flash() {
 	digitalWrite(d0, HIGH); 
@@ -159,13 +130,32 @@ void loop() {
 
 		last_load_on = load_on; //save last_load_on value
 		check_consecutive_current_withdraw(sensor_val);
+
+		//// check load_on during and interval
+		//if  ( i%sample_interval == 0 ) {
+		//	if (load_on) {
+		//		sarr[j] = 1;	
+		//	} else {
+		//		sarr[j] = 0;	
+		//	}
+		//	j++;
+		//	if (j > SAR_LEN){
+		//		j = 0;
+		//	}
+		//}
+
+		//ssum = 0;
+		//for (int m = 0; m < SAR_LEN; m++) {
+		//	ssum = ssum + sarr[m]; 
+		//}
+
+		//if (ssum > sproc) {
+		//	alarm = true;
+		//	memset(sarr, 0, sizeof(sarr));
+		//}
+
 	}
-	if (i%sample_interval == 0) {
-		reset_counter++;
-	}
-	if (reset_counter > reset_interval) {
-		reset_via_watchdog_timer();
-	}
+
 	i++;
 }
 
